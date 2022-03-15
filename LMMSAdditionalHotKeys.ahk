@@ -1,5 +1,6 @@
 #SingleInstance Force
 VstVisibles := True
+VstVisiblePID := ""
 LoopPointsActive := False
 #UseHook
 
@@ -112,10 +113,13 @@ VST-HideShow:
 	if (VstVisibles = True) 
 	{
 		DetectHiddenWindows, Off
+		VstVisiblePID := ""
+		MsgBox, Hide all visible VST . %VstVisibles%
 	}
 	else
 	{
 		DetectHiddenWindows, On
+		MsgBox, Show all visible VST . %VstVisibles%
 	}
 	WinGet windows, List
 	SetTitleMatchMode, 3
@@ -126,16 +130,19 @@ VST-HideShow:
 		Winget processnameoutput, ProcessName, ahk_id %id%
 		Winget pid, PID, ahk_id %id%
 	;	windowlist .= pid . " # " . processnameoutput . " # " . classnameoutput . "`n"
-		if (RegExMatch(processnameoutput, "RemoteVstPlugin.exe")){ 
+		if (RegExMatch(processnameoutput, "RemoteVstPlugin")){ 
 			if (VstVisibles = True) 
 			{
 				WinHide, ahk_pid %pid%
+				VstVisiblePID := pid . "|" . VstVisiblePID
 				Sleep, 100
 			}
 			else
 			{
-				WinShow, ahk_pid %pid%
-				Sleep, 100
+				if RegExMatch(VstVisiblePID, pid) {
+					WinShow, ahk_pid %pid%
+					Sleep, 100
+				}
 			}
 		}
 	}
@@ -146,7 +153,9 @@ VST-HideShow:
 	else
 	{
 		VstVisibles := True
+		VstVisiblePID := ""
 	}
+	MsgBox %VstVisiblePID%
 	;MsgBox %windowlist%
 	SetTitleMatchMode, 2
 return
