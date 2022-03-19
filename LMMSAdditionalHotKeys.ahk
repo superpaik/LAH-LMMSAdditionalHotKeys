@@ -26,6 +26,7 @@ HotKey, !v, VST-HideShow
 
 ; Ctrl+Space: play/stop from Song Editor
 Song-Editor-PlayStop:
+	WinActivate, ahk_exe lmms.exe
 	Send, {F9}
 	Sleep, 100
 	Send, {F5}
@@ -36,6 +37,7 @@ return
 
 ; Alt+Space: play/stop from Piano Roll
 Piano-Roll-PlayStop:
+	WinActivate, ahk_exe lmms.exe
 	Send, {F9}
 	Sleep, 100
 	Send, {F7}
@@ -46,6 +48,7 @@ return
 
 ; Ctrl+Alt+Space: play record button from Piano Roll 
 Piano-Roll-Record-PlayStop:
+	WinActivate, ahk_exe lmms.exe
 	Send, {F9}
 	Sleep, 100
 	Send, {F7}
@@ -72,6 +75,7 @@ return
 
 ; Ctrl+l: Enable/Disable Loop-points
 Loop-Points-EnableDisable:
+	WinActivate, ahk_exe lmms.exe
 	IconExists := False
 	Send, {F9}
 	Sleep, 100
@@ -114,12 +118,12 @@ VST-HideShow:
 	{
 		DetectHiddenWindows, Off
 		VstVisiblePID := ""
-		MsgBox, Hide all visible VST . %VstVisibles%
+		;MsgBox, Hide all visible VST . %VstVisibles%
 	}
 	else
 	{
 		DetectHiddenWindows, On
-		MsgBox, Show all visible VST . %VstVisibles%
+		;MsgBox, Show all visible VST . %VstVisibles%
 	}
 	WinGet windows, List
 	SetTitleMatchMode, 3
@@ -155,7 +159,7 @@ VST-HideShow:
 		VstVisibles := True
 		VstVisiblePID := ""
 	}
-	MsgBox %VstVisiblePID%
+	;MsgBox %VstVisiblePID%
 	;MsgBox %windowlist%
 	SetTitleMatchMode, 2
 return
