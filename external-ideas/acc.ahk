@@ -433,20 +433,23 @@ TV_Expanded(TVid) {
 TV_BuildAccChildren(AccObj, Parent, Selected_Child="", Flag="") {
 	TVobj[Parent].need_children := false
 	Parent_Obj_Path := Trim(TVobj[Parent].Obj_Path, ",")
-	for wach, child in Acc_Children(AccObj) {
-		if Not IsObject(child) {
-			added := TV_Add("[" A_Index "] " Acc_GetRoleText(AccObj.accRole(child)), Parent)
-			TVobj[added] := {is_obj:false, obj:Acc, childid:child, Obj_Path:Parent_Obj_Path}
-			if (child = Selected_Child)
-				TV_Modify(added, "Select")
+	; added by me, because of error on LMMS
+	If (ComObjType(AccObj, "Name") = "IAccessible") {
+		for wach, child in Acc_Children(AccObj) {
+			if Not IsObject(child) {
+				added := TV_Add("[" A_Index "] " Acc_GetRoleText(AccObj.accRole(child)), Parent)
+				TVobj[added] := {is_obj:false, obj:Acc, childid:child, Obj_Path:Parent_Obj_Path}
+				if (child = Selected_Child)
+					TV_Modify(added, "Select")
+			}
+			else {
+				added := TV_Add("[" A_Index "] " Acc_Role(child), Parent, "bold")
+				TVobj[added] := {is_obj:true, need_children:true, obj:child, childid:0, Children:[], Obj_Path:Trim(Parent_Obj_Path "," A_Index, ",")}
+			}
+			TVobj[Parent].Children.Insert(added)
+			if (A_Index = Flag)
+				Flagged_Child := added
 		}
-		else {
-			added := TV_Add("[" A_Index "] " Acc_Role(child), Parent, "bold")
-			TVobj[added] := {is_obj:true, need_children:true, obj:child, childid:0, Children:[], Obj_Path:Trim(Parent_Obj_Path "," A_Index, ",")}
-		}
-		TVobj[Parent].Children.Insert(added)
-		if (A_Index = Flag)
-			Flagged_Child := added
 	}
 	return Flagged_Child
 }

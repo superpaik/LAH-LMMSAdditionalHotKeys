@@ -1,10 +1,11 @@
 #SingleInstance Force
+global	Border := new Outline, Stored:={}, Acc, ChildId, TVobj, Win:={}
 
 ^!r::Reload  ; Ctrl+Alt+R
 
 #w::
 	global Whwnd
-	Gui Acc: Default
+	;Gui Acc: Default
 	;static ShowButtonEnabled
 	MouseGetPos, , , Whwnd
 	GuiControlGet, SectionLabel, , WinCtrl
@@ -15,15 +16,10 @@
 	WinGet, proc, ProcessName, ahk_id %Hwnd%
 	WinGet, procid, PID, ahk_id %Hwnd%
 	
-	Gui Main: Default
+	;Gui Main: Default
 	Location := GetAccLocation(Acc, ChildId, x,y,w,h)
 	;MsgBox, %x%, "-",%y%,"-",%w%,"-",%h%
 	MsgBox, % Acc.accName(ChildId) 
-	
-	r := GetAccPath(Acc)
-	Child_Path:=r.Path
-	MsgBox, % Child_Path
-	
 	
 	;MsgBox, % Acc_Query(Acc)
 	
@@ -35,8 +31,84 @@
 	;MsgBox, "Process Name: ", %proc%, " Id: ", %procid%, " ChildName: ", %AccName%
 return
 
+#s::
+; try to show all the objects in screen up to "ventana"
+	;Acc := Acc_ObjectFromWindow(hWnd)
+	;Acc := Acc_ObjectFromWindow(Acc)
+	global Whwnd
+	MouseGetPos, , , Whwnd
+	GuiControlGet, SectionLabel, , WinCtrl
+	Acc := Acc_ObjectFromPoint(ChildId)
+	Location := GetAccLocation(Acc, ChildId)
+	Whwnd := Acc_WindowFromObject(Acc)
+	
+	BuildTreeView()
+	
+	MsgBox, % TVobj[0].obj
+	;r := GetAccPath(Acc)
+	;Child_Path:=r.Path
+	;MsgBox, % Child_Path
+return
 
+BuildTreeView()
+{
+	r := GetAccPath(Acc)
+	AccObj:=r.AccObj, Child_Path:=r.Path, r:=""
+;	Gui Acc: Default
+	TV_Delete()
+;	GuiControl, -Redraw, TView
+	parent := TV_Add(Acc_Role(AccObj), "", "Bold Expand")
+	TVobj := {(parent): {is_obj:true, obj:AccObj, need_children:false, childid:0, Children:[]}}
+	Loop Parse, Child_Path, .
+	{
+		if A_LoopField is not Digit
+			TVobj[parent].Obj_Path := Trim(TVobj[parent].Obj_Path "," A_LoopField, ",")
+		else {
+			StoreParent := parent
+			parent := TV_BuildAccChildren(AccObj, parent, "", A_LoopField)
+			TVobj[parent].need_children := false
+			TV_Expanded(StoreParent)
+			TV_Modify(parent,"Expand")
+			AccObj := TVobj[parent].obj
+		}
+	}
+	if Not ChildId {
+		TV_BuildAccChildren(AccObj, parent)
+		TV_Modify(parent, "Select")
+	}
+	else
+		TV_BuildAccChildren(AccObj, parent, ChildId)
+	TV_Expanded(parent)
+;	GuiControl, +Redraw, TView
+}
 
+TV_Expanded(TVid) {
+	For Each, TV_Child_ID in TVobj[TVid].Children
+		if TVobj[TV_Child_ID].need_children
+			TV_BuildAccChildren(TVobj[TV_Child_ID].obj, TV_Child_ID)
+}
+TV_BuildAccChildren(AccObj, Parent, Selected_Child="", Flag="") {
+	TVobj[Parent].need_children := false
+	Parent_Obj_Path := Trim(TVobj[Parent].Obj_Path, ",")
+	If (ComObjType(AccObj, "Name") = "IAccessible") {
+		for wach, child in Acc_Children(AccObj) {
+			if Not IsObject(child) {
+				added := TV_Add("[" A_Index "] " Acc_GetRoleText(AccObj.accRole(child)), Parent)
+				TVobj[added] := {is_obj:false, obj:Acc, childid:child, Obj_Path:Parent_Obj_Path}
+				if (child = Selected_Child)
+					TV_Modify(added, "Select")
+			}
+			else {
+				added := TV_Add("[" A_Index "] " Acc_Role(child), Parent, "bold")
+				TVobj[added] := {is_obj:true, need_children:true, obj:child, childid:0, Children:[], Obj_Path:Trim(Parent_Obj_Path "," A_Index, ",")}
+			}
+			TVobj[Parent].Children.Insert(added)
+			if (A_Index = Flag)
+				Flagged_Child := added
+		}
+	}
+	return Flagged_Child
+}
 
 GetAccPath(Acc, byref hwnd="") {
 	hwnd := Acc_WindowFromObject(Acc)
@@ -58,15 +130,15 @@ GetEnumIndex(Acc, ChildId=0) {
 		ChildPos := Acc_Location(Acc).pos
 		For Each, child in Acc_Children(Acc_Parent(Acc))
 			if IsObject(child) and Acc_Location(child).pos=ChildPos
-				;return A_Index
-				return Acc_Role(child)
+				return A_Index
+				;return Acc_Role(child)
 	} 
 	else {
 		ChildPos := Acc_Location(Acc,ChildId).pos
 		For Each, child in Acc_Children(Acc)
 			if Not IsObject(child) and Acc_Location(Acc,child).pos=ChildPos
-				;return A_Index
-				return Acc_Role(child)
+				return A_Index
+				;return Acc_Role(child)
 	}
 }
 
@@ -89,7 +161,7 @@ GetAccLocation(AccObj, Child=0, byref x="", byref y="", byref w="", byref h="") 
 	}
 	Acc_ObjectFromEvent(ByRef _idChild_, hWnd, idObject, idChild)
 	{
-	Acc_Init()
+		Acc_Init()
 		If	DllCall("oleacc\AccessibleObjectFromEvent", "Ptr", hWnd, "UInt", idObject, "UInt", idChild, "Ptr*", pacc, "Ptr", VarSetCapacity(varChild,8+2*A_PtrSize,0)*0+&varChild)=0
 		Return	ComObjEnwrap(9,pacc,1), _idChild_:=NumGet(varChild,8,"UInt")
 	}

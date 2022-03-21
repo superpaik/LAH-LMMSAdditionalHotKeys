@@ -170,7 +170,7 @@ return
 
 #IfWinActive
 
-^!r::Reload  ; Ctrl+Alt+R
+;^!r::Reload  ; Ctrl+Alt+R
 
 
 ^!t::
