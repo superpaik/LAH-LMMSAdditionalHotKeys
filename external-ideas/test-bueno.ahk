@@ -1,6 +1,8 @@
 ;==================================================
 #SingleInstance Force
 
+global Acc
+
 ^!r::Reload  ; Ctrl+Alt+R
 
 ;===============
@@ -15,33 +17,69 @@
 ;===============
 
 ; de aquí https://www.autohotkey.com/boards/viewtopic.php?f=6&t=40514
-^!q:: ;Notepad - get status bar text
+^!q:: ;Acc - get position of element under cursor
+oAcc := Acc_ObjectFromPoint(vChildID)
+Acc_Location(oAcc, vChildID, vPos)
+MsgBox, % vPos, 
+MsgBox, % oAcc.accName(0)
+return
+
+^!w:: ;Notepad - get Edit control position
 WinGet, hWnd, ID, A
-MsgBox, % Clipboard := JEE_AccGetTextAll(hWnd, "`r`n")
+PathIni := "4.1.1.2.1."
+loop {
+	PathObj := "4.1.1.2.1." . A_index
+	;MsgBox, % PathObj
+	oAcc := Acc_Get("Object", PathObj, 0, "ahk_id " hWnd)
+	if isObject(oAcc)
+	{
+		Acc_Location(oAcc, 0, vPos)
+		MsgBox % " Name: " . oAcc.accName(0) . " State: " .  oAcc.accState(0)
+	}
+	else
+		break
+	if (A_index > 8)
+	{
+		oAcc.accDoDefaultAction(0)
+		Send ^{F4}
+	}
+}
 return
 
-^!w:: ;Notepad - get Acc info (controls)
-ControlGet, hCtl1, Hwnd,, Edit1, A
-ControlGet, hCtl2, Hwnd,, msctls_statusbar321, A
-MsgBox, % Clipboard := JEE_AccGetTextAll(hCtl1, "`r`n")
-MsgBox, % Clipboard := JEE_AccGetTextAll(hCtl2, "`r`n")
-
-;Edit control info is: 4
-;the acc path will be 4
-;and we will use 0 with accValue()
-oAcc := Acc_Get("Object", "4", 0, "ahk_id " hCtl1)
-MsgBox, % oAcc.accValue(0)
-oAcc := ""
-
-;status bar info is: 4 c2
-;the acc path will be 4
-;and we will use 2 with accName()
-oAcc := Acc_Get("Object", "4", 0, "ahk_id " hCtl2)
-MsgBox, % oAcc.accName(2)
-oAcc := ""
-return
 
 ;==================================================
+GetAccPath(Acc, byref hwnd="") {
+	hwnd := Acc_WindowFromObject(Acc)
+	WinObj := Acc_ObjectFromWindow(hwnd)
+	WinObjPos := Acc_Location(WinObj).pos
+	while Acc_WindowFromObject(Parent:=Acc_Parent(Acc)) = hwnd {
+		t2 := GetEnumIndex(Acc) "." t2
+		if Acc_Location(Parent).pos = WinObjPos
+			return {AccObj:Parent, Path:SubStr(t2,1,-1)}
+		Acc := Parent
+	}
+	while Acc_WindowFromObject(Parent:=Acc_Parent(WinObj)) = hwnd
+		t1.="P.", WinObj:=Parent
+	return {AccObj:Acc, Path:t1 SubStr(t2,1,-1)}
+}
+
+GetEnumIndex(Acc, ChildId=0) {
+	if Not ChildId {
+		ChildPos := Acc_Location(Acc).pos
+		For Each, child in Acc_Children(Acc_Parent(Acc))
+			if IsObject(child) and Acc_Location(child).pos=ChildPos
+				return A_Index
+	} 
+	else {
+		ChildPos := Acc_Location(Acc,ChildId).pos
+		For Each, child in Acc_Children(Acc)
+			if Not IsObject(child) and Acc_Location(Acc,child).pos=ChildPos
+				return A_Index
+	}
+}
+
+
+
 
 JEE_StrRept(vText, vNum)
 {
@@ -51,26 +89,11 @@ JEE_StrRept(vText, vNum)
 	;return StrReplace(Format("{:0" vNum "}", 0), 0, vText)
 }
 
+
+
+
+
 ;==================================================
-
-; ;e.g.
-; q::
-; WinGet, hWnd, ID, A
-; MsgBox, % Clipboard := JEE_AccGetTextAll(hWnd, "`r`n")
-; return
-
-; ;e.g.
-; q::
-; ControlGet, hCtl, Hwnd,, Edit1, A
-; MsgBox, % Clipboard := JEE_AccGetTextAll(hCtl, "`r`n")
-; return
-
-; ;e.g.
-; q::
-; ControlGetFocus, vCtlClassNN, A
-; ControlGet, hCtl, Hwnd,, % vCtlClassNN, A
-; MsgBox, % Clipboard := JEE_AccGetTextAll(hCtl, "`r`n")
-; return
 
 ;vOpt: space-separated list
 ;vOpt: n#: e.g. n20 ;limit retrieve name to first 20 characters
@@ -144,7 +167,11 @@ JEE_AccGetTextAll(hWnd:=0, vSep:="`n", vIndent:="`t", vOpt:="")
 		}
 		Needle := "4.1.1.2"
 		StringGetPos, pos, vAccPath, %Needle%
+		;MsgBox, "#",%vAccPath%,"#"
+		if (pos > = 0)
+		{
 			vOutput .= vAccPath "`t" JEE_StrRept(vIndent, vLevel-1) vRoleText " [" vName "][" vValue "]" vSep
+		}
 
 		oChildren := Acc_Children(oKey)
 		if (vLevel == vLevelLim)
