@@ -58,7 +58,5 @@ There are three menus called "MenuSampleFolders", "MenuFX" and "MenuVeSTige". Ev
 <li>Although the directive "#IfWinActive" is used to avoid the hotkeys to work outside LMMS, apparently it doesn't work.</li>
 <li>In order to make the context menu to work I use the library acc.ahk to locate the objects in the GUI. Apparently, it doesn't work when there is more than one object in the screen (in the same position). Therefore, in order for it to work, it is best if the object you click has nothing behind, otherwise no menu will be shown. I believe is something related to how QT build the GUI.</li>
 </ul>
-		
-		
-		
+
 
