@@ -9,7 +9,7 @@ It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the
 ------------------------------------------------------------------------------ <br>
 
 The object of the project is to have additional hotkeys for LMMS.<br>
-Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br>
+Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br><br>
 If you have AutoHotKey in your system you can load the script directly. You will need:
 <ul>
 	<li>LMMSAdditionalHotKeys.ahk : main script</li>
@@ -35,10 +35,8 @@ If you don't have AutoHotKey, you will need:
 <li><b>Ctrl+Alt+w</b>: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor, as a default window.</li><br>
 <li><b>MiddleMouseButton</b>: delete the FX the cursor is over</li><br>
 <li><b>Ctrl+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)</li><br>
-<br>
 </ul>
-<b>Context menu are available for:</b><br>
-
+<b>Context menus are available for:</b><br>
 <ul>
 <li>Adding an effect. If the user clicks on "Add effect" button either on sample/instrument FX tab or in FX-Mixer the popup menu is shown</li>
 	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311587-3fd7b4cd-a3ae-42d8-8dde-cf9888b2d840.png" alt="Adding an effect menu">
