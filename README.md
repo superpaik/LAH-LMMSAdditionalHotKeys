@@ -10,19 +10,19 @@ It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the
 
 <b>Current Hotkeys are</b><br>
 
-; Ctrl+Space: Global Song-Editor Play/Pause. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")
-; Alt+Space: Global Piano-Roll Play/Pause. It plays the notes on Piano-Roll (if there is any) Works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")
-; Ctrl+Alt+Space: Piano-Roll record while playing 
-; Ctrl+l: Enable/Disable Loop-points. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")
-; Ctrl+Alt+V: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")
-; Ctrl+Alt+w: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor, as a default window.
-; MiddleMouseButton: (context action) delete the FX the cursor is over
-; Ctrl+LeftMouseButton: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)
-; 	Context menu are defined in the file config.xml
-; 	Context menu are available for:
-;		- Adding an effect. If the user clicks on "Add effect" button either on smple/instrument FX tab or in FX-Mixer the popup menu is shown
-;		- Adding an VST instrument. If the user clicks on the VeTIge folder icon to load a VST instrument
-;		- Helps with navigating samples folder. If you are like me an have samples inside the project directory, then every time you need to go to that folder is not direct, so if you define your project samples directories in the config.xml file you can navigate easier.
+<b>Ctrl+Space</b>: Global Song-Editor Play/Pause. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")<br>
+<b>Alt+Space</b>: Global Piano-Roll Play/Pause. It plays the notes on Piano-Roll (if there is any) Works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")<br>
+<b>Ctrl+Alt+Space</b>: Piano-Roll record while playing <br>
+<b>Ctrl+l</b>: Enable/Disable Loop-points. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")<br>
+<b>Ctrl+Alt+v</b>: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")<br>
+<b>Ctrl+Alt+w</b>: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor, as a default window.<br>
+<b>MiddleMouseButton</b>: (context action) delete the FX the cursor is over<br>
+<b>Ctrl+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)<br>
+; 	Context menu are defined in the file config.xml<br>
+; 	Context menu are available for:<br>
+;		- Adding an effect. If the user clicks on "Add effect" button either on smple/instrument FX tab or in FX-Mixer the popup menu is shown<br>
+;		- Adding an VST instrument. If the user clicks on the VeTIge folder icon to load a VST instrument<br>
+;		- Helps with navigating samples folder. If you are like me an have samples inside the project directory, then every time you need to go to that folder is not direct, so if you define your project samples directories in the config.xml file you can navigate easier.<br>
 ;		  It works on the folder icon on "AudioFileProcessor" or in a sample-track, helps you go to an establish folder where your project sampler are.
 ; 		  Config file is quite straight forward. Here is an example:
 ;<?xml version="1.0" encoding="utf-8" standalone="yes"?>
