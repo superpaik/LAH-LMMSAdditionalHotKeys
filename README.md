@@ -8,6 +8,15 @@ It uses acc.ahk Standard Library by Sean Updated by jethrow <br>
 It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the author <br>
 ------------------------------------------------------------------------------ <br>
 
+The object of the project is to have additional hotkeys for LMMS.<br>
+Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br>
+If you have AutoHotKey in your system you can load the script directly. You will need:
+<ul>
+	<li>LMMSAdditionalHotKeys.ahk : main script</li>
+	<li>acc.ahk : main script</li>
+	
+
+
 <b>Current Hotkeys are:</b><br>
 
 <ul>
@@ -20,35 +29,27 @@ It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the
 <li><b>MiddleMouseButton</b>: (context action) delete the FX the cursor is over</li><br>
 <li><b>Ctrl+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)</li><br>
 <br>
+</ul>
 <b>Context menu are available for:</b><br>
+
+<ul>
 <li>Adding an effect. If the user clicks on "Add effect" button either on smple/instrument FX tab or in FX-Mixer the popup menu is shown</li>
+	![imagen](https://user-images.githubusercontent.com/68785450/161311587-3fd7b4cd-a3ae-42d8-8dde-cf9888b2d840.png)
 <li>Adding an VST instrument. If the user clicks on the VeTIge folder icon to load a VST instrument</li>
 <li>Helps with navigating samples folder. If you are like me an have samples inside the project directory, then every time you need to go to that folder is not direct, so if you define your project samples directories in the config.xml file you can navigate easier. It works on the folder icon on "AudioFileProcessor" or in a sample-track, helps you go to an establish folder where your project sampler are.</li>
+</ul>
+	
 <br>
 Config file is quite straight forward.
 In <ConfigVariables> you set the VST-dir that you have in you LMMS (In LMMS settings: VST plugin directory)<br>
-
-
-;	<MenuSamplesFolders>   
-		<MenuItem show="Chill trap Project Folder" value="C:\Users\superpaik\lmms\projects\Mis EDM\2. In progress\Chill trap 27-02"/>
-		<MenuItem show="Chill trap SAMPLES Folder" value="C:\Users\superpaik\lmms\projects\Mis EDM\2. In progress\Chill trap 27-02\Samples"/>
-	</MenuSamplesFolders>
-	<MenuFX>
-		<MenuItem show="Effects/Delay/BabyComeback" value=""/>
-		<MenuItem show="Effects/Delay/Echo Delay Line 0.1s" value="Echo Delay Line (Maximum Delay 0.1s)"/>
-		<MenuItem show="Effects/Delay/GDuckDly" value=""/>
-		<MenuItem show="Effects/Delay/ValhallaFreqEcho" value="ValhallaFreqEcho_x64"/>
-		<MenuItem show="Mixing/Compresor/BUSTERse" value=""/>
-		<MenuItem show="TAP AutoPanner" value=""/>
-	</MenuFX>
-	<MenuVeSTige>
-		<MenuItem show="Piano/Keyzone Classic" value="Bitsonic\Keyzone Classic"/>
-		<MenuItem show="Piano/Salamander Piano" value="Salamander Piano\Salamander Piano - 64"/>
-		<MenuItem show="Sampler/Poise" value="OneSmallClue\Poise"/>
-		<MenuItem show="Sampler/Sitala" value="Decomposer\Sitala"/>
-		<MenuItem show="Synths/Surge" value="Surge\Surge"/>
-		<MenuItem show="Synths/Tal-NoiseMaker-64" value="Tal\Tal-NoiseMaker-64"/>
-		<MenuItem show="Vital" value="Vital\Vital"/>
-	</MenuVeSTige>
-</ConfigFile>
+There are three menus called "MenuSampleFolders", "MenuFX" and "MenuVeSTige". Every menu works the same way. There is a "show" text, which is the label that is visible in the menu, and a "value" text that is the information that is passed to the controls to execute the actions. In the case os "MenuSampleFolders" is the full path to your project folders. In the other two cases is the full name of the Effect or VST. Menus can have submenus by adding a slash "/". Have in mind that there is no control over the xml file. Therefore, if it's incorrect, unexpected behaviour can happens ;-)
+	
+Known issues:
+<ul>
+<li>Although the directive "#IfWinActive" is used to avoid the hotkeys to work outside LMMS, apparently it doesn't work.</li>
+<li>In order to make the context menu to work I use the library acc.ahk to locate the objects in the GUI. Apparently, it doesn't work when there is more than one object in the screen (in the same position). Therefore, in order for it to work, it is best if the object you click has nothing behind, otherwise no menu will be shown. I believe is something related to how QT build the GUI.
+		
+		
+		
+		
 
