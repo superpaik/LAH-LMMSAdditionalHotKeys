@@ -13,8 +13,15 @@ Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br>
 If you have AutoHotKey in your system you can load the script directly. You will need:
 <ul>
 	<li>LMMSAdditionalHotKeys.ahk : main script</li>
-	<li>acc.ahk : main script</li>
-</ul>	
+	<li>acc-for-lmms.ahk : main script</li>
+	<li>config.xml : config file for context menu. Edit it to your liking before using it</li>
+</ul>
+If you don't have AutoHotKey, you will need:
+<ul>
+	<li>LMMSAdditionalHotKeys.exe : main script</li>
+	<li>config.xml : config file for context menu. Edit it to your liking before using it</li>
+	<li>Store the two files in the same directory. Upon executing the exe an icon try will be added from where you can exit the script, suspend the HotKeys or pause the script</li>
+</ul>
 
 
 <b>Current Hotkeys are:</b><br>
@@ -26,14 +33,14 @@ If you have AutoHotKey in your system you can load the script directly. You will
 <li><b>Ctrl+l</b>: Enable/Disable Loop-points. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")</li><br>
 <li><b>Ctrl+Alt+v</b>: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")</li><br>
 <li><b>Ctrl+Alt+w</b>: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor, as a default window.</li><br>
-<li><b>MiddleMouseButton</b>: (context action) delete the FX the cursor is over</li><br>
+<li><b>MiddleMouseButton</b>: delete the FX the cursor is over</li><br>
 <li><b>Ctrl+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)</li><br>
 <br>
 </ul>
 <b>Context menu are available for:</b><br>
 
 <ul>
-<li>Adding an effect. If the user clicks on "Add effect" button either on smple/instrument FX tab or in FX-Mixer the popup menu is shown</li>
+<li>Adding an effect. If the user clicks on "Add effect" button either on sample/instrument FX tab or in FX-Mixer the popup menu is shown</li>
 	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311587-3fd7b4cd-a3ae-42d8-8dde-cf9888b2d840.png" alt="Adding an effect menu">
 <li>Adding an VST instrument. If the user clicks on the VeTIge folder icon to load a VST instrument</li>
 	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311910-b52f1eb9-0c82-4f52-9086-fdb1c949f06e.png" alt="Adding an VST menu">
