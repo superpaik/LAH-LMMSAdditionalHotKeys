@@ -1,10 +1,15 @@
 # LAH (LMMSAdditionalHotKeys)
 Additional HotKeys to LMMS using AutoHotKey (only for windows) <br>
-Inspired after checking the https://enhancementsuite.me/ project, that is something similar but for Ableton Live.
+Inspired after checking the https://enhancementsuite.me/ project, that is something similar but for Ableton Live. <br>
 
+It uses acc.ahk Standard Library by Sean Updated by jethrow <br>
+	http://www.autohotkey.com/board/topic/77303-acc-library-ahk-l-updated-09272012/ <br>
+ 	https://dl.dropbox.com/u/47573473/Web%20Server/AHK_L/Acc.ahk <br>
+It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the author <br>
+------------------------------------------------------------------------------ <br>
 
+<b>Current Hotkeys are</b><br>
 
-; Current Hotkeys are
 ; Ctrl+Space: Global Song-Editor Play/Pause. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")
 ; Alt+Space: Global Piano-Roll Play/Pause. It plays the notes on Piano-Roll (if there is any) Works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")
 ; Ctrl+Alt+Space: Piano-Roll record while playing 
