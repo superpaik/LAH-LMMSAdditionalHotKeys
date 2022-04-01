@@ -52,7 +52,7 @@ If you don't have AutoHotKey, you will need:
 Config file is quite straight forward.
 In <ConfigVariables> you set the VST-dir that you have in you LMMS (In LMMS settings: VST plugin directory)<br>
 There are three menus called "MenuSampleFolders", "MenuFX" and "MenuVeSTige". Every menu works the same way. There is a "show" text, which is the label that is visible in the menu, and a "value" text that is the information that is passed to the controls to execute the actions. In the case os "MenuSampleFolders" is the full path to your project folders. In the other two cases is the full name of the Effect or VST. Menus can have submenus by adding a slash "/". Have in mind that there is no control over the xml file. Therefore, if it's incorrect, unexpected behaviour can happens ;-)
-<br>	
+<br><br>
 <b>Known issues:</b>
 <ul>
 <li>Although the directive "#IfWinActive" is used to avoid the hotkeys to work outside LMMS, apparently it doesn't work.</li>
