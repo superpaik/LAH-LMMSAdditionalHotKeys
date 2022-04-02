@@ -188,8 +188,8 @@ HotKey, ^l, Loop-Points-EnableDisable
 HotKey, ^!v, VST-HideShow
 ; Ctrl+Alt+w: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor
 HotKey, ^!w, Clear-WorkSpace
-; Alt + P: Click on "Mute this FX channel" for all Pinned FX Channels (trough context menu)
-Hotkey, !p, Click-On-Pin-Fx-Channels
+; Ctrl+Alt+p: Click on "Mute this FX channel" for all Pinned FX Channels (trough context menu)
+Hotkey, ^!p, Click-On-Pin-Fx-Channels
 ; Ctrl+LeftMouseButton: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file). And to Pin FX channels (menu inside this code)
 Hotkey, ^LButton, Show-Context-Menu
 ; MiddleMouseButton: (context action) delete the FX the cursor is over. Turning off this effect temporarily
