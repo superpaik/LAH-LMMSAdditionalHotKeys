@@ -10,6 +10,8 @@ It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the
 
 The object of the project is to have additional hotkeys for LMMS.<br>
 Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br><br>
+Developed and tested on LMMS 1.2.2. Since it uses GUI elements Id it may not work on other LMMS version.<br>
+
 If you have AutoHotKey in your system you can load the script directly. You will need:
 <ul>
 	<li>LMMSAdditionalHotKeys.ahk : main script</li>
