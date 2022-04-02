@@ -35,17 +35,19 @@ If you don't have AutoHotKey, you will need:
 <li><b>Ctrl+l</b>: Enable/Disable Loop-points. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")</li><br>
 <li><b>Ctrl+Alt+v</b>: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")</li><br>
 <li><b>Ctrl+Alt+w</b>: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor, as a default window.</li><br>
-<li><b>MiddleMouseButton</b>: delete the FX the cursor is over</li><br>
+<li><b>Alt+p</b>: Click on "Mute this FX channel" for all Pinned FX Channels (pinned trough context menu) </li><br>
 <li><b>Ctrl+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)</li><br>
 </ul>
 <b>Context menus are available for:</b><br>
 <ul>
-<li>Adding an effect. If the user clicks on "Add effect" button either on sample/instrument FX tab or in FX-Mixer the popup menu is shown</li>
-	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311587-3fd7b4cd-a3ae-42d8-8dde-cf9888b2d840.png" alt="Adding an effect menu">
-<li>Adding an VST instrument. If the user clicks on the VeTIge folder icon to load a VST instrument</li>
-	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311910-b52f1eb9-0c82-4f52-9086-fdb1c949f06e.png" alt="Adding an VST menu">
-<li>Helps with navigating samples folder. If you are like me an have samples inside the project directory, then every time you need to go to that folder is not direct, so if you define your project samples directories in the config.xml file you can navigate easier. It works on the folder icon on "AudioFileProcessor" or in a sample-track, helps you go to an establish folder where your project sampler are.</li>
-	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161312994-acb257ce-a391-4624-8ff0-3645753fda0f.png" alt="Project Samples Folders">
+<li>Adding an effect. If the user clicks on "Add effect" button either on sample/instrument FX tab or in FX-Mixer the popup menu is shown
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311587-3fd7b4cd-a3ae-42d8-8dde-cf9888b2d840.png" alt="Adding an effect menu"></li><br>
+<li>Adding an VST instrument. If the user clicks on the VeTIge folder icon to load a VST instrument
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311910-b52f1eb9-0c82-4f52-9086-fdb1c949f06e.png" alt="Adding an VST menu"></li><br>
+<li>Helps with navigating samples folder. If you are like me an have samples inside the project directory, then every time you need to go to that folder is not direct, so if you define your project samples directories in the config.xml file you can navigate easier. It works on the folder icon on "AudioFileProcessor" or in a sample-track, helps you go to an establish folder where your project sampler are.
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161312994-acb257ce-a391-4624-8ff0-3645753fda0f.png" alt="Project Samples Folders"></li><br>
+<li>Pin/UnPin FX channels. With this option you can select/unselect the channels that would be clicked on "Mute this FX channel" with Ctrl+Alt+P hotkey. Useful if you have Sub or Send Channels that need to be activated always, so when you click on "Solo this FX channel" you can turn all those channels on with easy. Unfortunately, showing this context menu is kind of slow, so be patient.
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161395830-42d2f4e6-8da2-4473-8af8-2dbc098dcfbf.png" alt="FX Channels Pin/UnPin menu"></li><br>
 </ul>
 	
 <br>
