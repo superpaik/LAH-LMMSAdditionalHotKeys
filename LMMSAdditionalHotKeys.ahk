@@ -28,6 +28,10 @@ global fxMenu, fxArray := []
 global vstMenu, vstArray := []
 global samplesFoldersMenu, samplesFoldersArray := []
 
+global PinnedFxChannels := "|"
+global FxChannelToPinUnPin
+
+
 ; read config.xml file
 xmlFile := A_ScriptDir "\config.xml"
 FileRead, xmlData, % xmlFile
@@ -159,6 +163,11 @@ for Item in ( xmlDoc.selectNodes( "//ConfigFile/MenuVeSTige/MenuItem" ),  descLi
 	}
 }	
 
+; Create FX context menu for Pinning and Unpinning Fx Channels
+Menu fxChannelMenu, Add, Pin this channel, MenuHandlerFxMenu
+Menu fxChannelMenu, Add, UnPin this channel, MenuHandlerFxMenu
+Menu fxChannelMenu, Add, UnPin all channels, MenuHandlerFxMenu
+
 
 ;-------------------------------------
 ; HotKey "creation"
@@ -179,12 +188,13 @@ HotKey, ^l, Loop-Points-EnableDisable
 HotKey, ^!v, VST-HideShow
 ; Ctrl+Alt+w: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor
 HotKey, ^!w, Clear-WorkSpace
-; Ctrl+LeftMouseButton: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)
+; Alt + P: Click on "Mute this FX channel" for all Pinned FX Channels (trough context menu)
+Hotkey, !p, Click-On-Pin-Fx-Channels
+; Ctrl+LeftMouseButton: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file). And to Pin FX channels (menu inside this code)
 Hotkey, ^LButton, Show-Context-Menu
-; MiddleMouseButton: (context action) delete the FX the cursor is over
-Hotkey, MButton, Delete-FX
+; MiddleMouseButton: (context action) delete the FX the cursor is over. Turning off this effect temporarily
+; Hotkey, MButton, Delete-FX
 
-Hotkey, !t, test
 
 #IfWinActive
 
@@ -193,27 +203,6 @@ return
 ;--------------------------------
 ; Hotkey functions definition
 ;--------------------------------
-
-; test
-test:
-WinGet, hWnd, ID, A
-;hWnd := -1 ;get all possible ancestors
-oAcc := Acc_ObjectFromPoint(vChildID)
-vAccPath := JEE_AccGetPath(oAcc, hWnd)
-if vChildID
-	MsgBox, % Clipboard := vAccPath " c" vChildID
-else
-	MsgBox, % Clipboard := vAccPath
-
-;use acc path
-;vAccPath := "4.1.1.2.1.10.1.2.6.1.3"
-oAcc := Acc_Get("Object", vAccPath, vChildID, "ahk_id " hWnd)
-vName := vValue := ""
-vName := oAcc.accName(vChildID)
-vValue := oAcc.accValue(vChildID)
-MsgBox, % vName "`r`n" vValue
-return
-
 
 ; Ctrl+Space: Song-Editor Play/Stop (equivalent to hit "Space" inside the Song-Editor)
 SongEditor-PlayStop:
@@ -373,6 +362,29 @@ Clear-WorkSpace:
 	RestoreCursors()
 return
 
+; Alt + P: Click on "Mute this FX channel" for all Pinned FX Channels (trough context menu)
+Click-On-Pin-Fx-Channels:
+	if ( PinnedFxChannels == "|")
+		MsgBox, 64,, No Pinned chanels. `r`nPlease, pin them with the context menu on the FX channels.
+	else
+	{
+		MouseGetPos, MouseX, MouseY
+		WinGet, hWnd, ID, A
+		RealPinnedFxChannels := SubStr(PinnedFxChannels, 2, StrLen(PinnedFxChannels) - 2)
+		Loop, Parse, RealPinnedFxChannels, "|"
+		{
+			vAccPath := "4.1.1.2.1.1.1.2.1.1." . A_LoopField . ".6"
+			WinObjPos := Acc_Get("Location", vAccPath, 0, "ahk_id " hWnd)
+			StringSplit, PosXY, WinObjPos, %A_Space%
+			PosX := SubStr(PosXY1, 2) + 8
+			PosY := SubStr(PosXY2, 2) + 8
+			CoordMode, Mouse, Screen
+			Click, %PosX% %PosY%
+		}
+		MouseMove, MouseX, MouseY
+	}
+return
+
 ; Ctrl+LeftMouseButton: show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)
 ; unfortunately, only works when the clicked object doesn't have anything behind it.
 Show-Context-Menu:
@@ -389,19 +401,41 @@ Show-Context-Menu:
 	{ 
 		MouseGetPos, MouseXPos, MouseYPos
 		Menu, fxMenu, Show
+		return
 	}
 	; if the user clicks on the VeTIge folder icon to load a VST instrument
 	if (vDescription == "Open other VST-plugin")
 	{ 
 		MouseGetPos, MouseXPos, MouseYPos
 		Menu, vstMenu, Show
+		return
 	}
 	; if the user clicks on the folder icon on "AudioFileProcessor" or in a sample-track, helps you go to an establish folder where your project sampler are.
 	if (vDescription == "Open other sample") or (vDescription == "double-click to select sample")
 	{ 
 		MouseGetPos, MouseXPos, MouseYPos
 		Menu, samplesFoldersMenu, Show
+		return
 	}
+	SetSystemCursor() ; this action take some time. Unfortunately, it doesn't work
+	; if users clicks on an FX channel, we have to search for description in an inside object because the FX channel doesn't have any name nor description
+	FxChannelToPinUnPin := 0
+	vAccPath := JEE_AccGetPath(oAcc, hWnd)
+	SvAccPath := StrSplit(vAccPath, ".")
+	FxChannel := SvAccPath[11]
+	vAccPath := "4.1.1.2.1.1.1.2.1.1." . FxChannel . ".6"  ;-> this is the path to the "Mute this FX channel" object
+	oAcc := Acc_Get("Object", vAccPath, 0, "ahk_id " hWnd)
+	vDescription := oAcc.accDescription(0)
+	if (vDescription == "Mute this FX channel")
+	{ 
+		FxChannelToPinUnPin := FxChannel
+		MouseGetPos, MouseXPos, MouseYPos
+		RestoreCursors()
+		Menu, fxChannelMenu, Show
+	}
+	else
+		RestoreCursors()
+
 return
 
 
@@ -456,6 +490,32 @@ Sleep 500
 SendInput %sampleFolder%
 Sleep 500
 Send {ENTER}
+return
+
+; menuHandler for FX channel
+MenuHandlerFxMenu:
+	;if no channel selected, return
+	if FxChannelToPinUnPin == 0
+		return
+	if (A_ThisMenuItem == "Pin this channel")
+	{
+		; if the channel is not already pinned
+		if (InStr(PinnedFxChannels, FxChannelToPinUnPin) == 0)
+			PinnedFxChannels .= FxChannelToPinUnPin . "|"
+	}
+	if (A_ThisMenuItem == "UnPin this channel")
+	{
+		FoundPos := InStr(PinnedFxChannels, FxChannelToPinUnPin)
+		if FoundPos != 0
+		{
+			LeftString := SubStr(PinnedFxChannels, 1, FoundPos - 1)
+			RightString := SubStr(PinnedFxChannels, FoundPos + StrLen(FxChannelToPinUnPin) + 1)
+			MsgBox, "L" %LeftString% "R" %RightString% "Pos" %FoundPos%
+			PinnedFxChannels := LeftString . RightString
+		}
+	}
+	if (A_ThisMenuItem == "UnPin all channels")
+		PinnedFxChannels := "|"
 return
 
 
