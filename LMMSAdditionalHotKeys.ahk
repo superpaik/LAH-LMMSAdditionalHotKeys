@@ -12,7 +12,7 @@
 #SingleInstance Force
 #UseHook
 
-#include acc-for-lmms.ahk
+#include acc-for-lah.ahk
 
 VstVisibles := True
 VstVisiblePID := ""
