@@ -1,5 +1,5 @@
 # LAH (LMMS Additional HotKeys)
-Additional HotKeys to LMMS using AutoHotKey (only for windows) <br>
+Additional HotKeys for LMMS using AutoHotKey (only for windows) <br>
 Inspired after checking the https://enhancementsuite.me/ project, that is something similar but for Ableton Live. <br>
 
 It uses acc.ahk Standard Library by Sean Updated by jethrow <br>
