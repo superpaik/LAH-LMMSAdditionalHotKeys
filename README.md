@@ -37,7 +37,7 @@ If you don't have AutoHotKey, you will need:
 <li><b>Ctrl+Alt+v</b>: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")</li><br>
 <li><b>Ctrl+Alt+w</b>: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor, as a default window.</li><br>
 <li><b>Alt+p</b>: Click on "Mute this FX channel" for all Pinned FX Channels (pinned trough context menu) </li><br>
-<li><b>Ctrl+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)</li><br>
+<li><b>Ctrl+Shift+LeftMouseButton</b>: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file)</li><br>
 </ul>
 <b>Context menus are available for:</b><br>
 <ul>
