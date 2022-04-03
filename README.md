@@ -11,6 +11,7 @@ It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the
 The object of the project is to have additional hotkeys for LMMS.<br>
 Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br><br>
 Developed and tested on LMMS 1.2.2. Since it uses GUI elements Id it may not work on other LMMS version.<br>
+When the interaction is with GUI objects, they have to be visible. Sometimes the hotkey can make the window active, but if the objects are hidden in the own window (like in FX-Mixer with the scroll bar) the hotkey won't work properly.
 
 If you have AutoHotKey in your system you can load the script directly. You will need:
 <ul>
@@ -46,8 +47,8 @@ If you don't have AutoHotKey, you will need:
 	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161311910-b52f1eb9-0c82-4f52-9086-fdb1c949f06e.png" alt="Adding an VST menu"></li><br>
 <li>Helps with navigating samples folder. If you are like me an have samples inside the project directory, then every time you need to go to that folder is not direct, so if you define your project samples directories in the config.xml file you can navigate easier. It works on the folder icon on "AudioFileProcessor" or in a sample-track, helps you go to an establish folder where your project sampler are.
 	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161312994-acb257ce-a391-4624-8ff0-3645753fda0f.png" alt="Project Samples Folders"></li><br>
-<li>Pin/UnPin FX channels. With this option you can select/unselect the channels that would be clicked on "Mute this FX channel" with Ctrl+Alt+P hotkey. Useful if you have Sub or Send Channels that need to be activated always, so when you click on "Solo this FX channel" you can turn all those channels on with easy. Unfortunately, showing this context menu is kind of slow, so be patient.
-	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161395830-42d2f4e6-8da2-4473-8af8-2dbc098dcfbf.png" alt="FX Channels Pin/UnPin menu"></li><br>
+<li>Pin/UnPin FX channels. With this option you can select/unselect the channels that would be clicked on "Mute this FX channel" with Ctrl+Alt+P hotkey. Useful if you have Group or Send Channels that need to be activated always, so when you click on "Solo this FX channel" you can turn all those channels on with easy. Unfortunately, showing this context menu is kind of slow, so be patient.
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="https://user-images.githubusercontent.com/68785450/161425718-09cca76a-81ca-418a-a477-f0fd83b33aac.png" alt="FX Channels Pin/UnPin menu"></li><br>
 </ul>
 	
 <br>
