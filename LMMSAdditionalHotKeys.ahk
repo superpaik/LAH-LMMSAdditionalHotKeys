@@ -165,6 +165,8 @@ for Item in ( xmlDoc.selectNodes( "//ConfigFile/MenuVeSTige/MenuItem" ),  descLi
 
 ; Create FX context menu for Pinning and Unpinning Fx Channels
 Menu fxChannelMenu, Add, Pin this channel, MenuHandlerFxMenu
+Menu fxChannelMenu, Add, Pin All Channels to the right, MenuHandlerFxMenu
+																		 
 Menu fxChannelMenu, Add, UnPin this channel, MenuHandlerFxMenu
 Menu fxChannelMenu, Add, UnPin all channels, MenuHandlerFxMenu
 
@@ -184,7 +186,7 @@ HotKey, !Space, PianoRoll-PlayStop
 HotKey, ^!Space, PianoRoll-Record-While-Playing
 ; Ctrl+l: Enable/Disable Loop-points
 HotKey, ^l, Loop-Points-EnableDisable
-; "Ctrl+Alt+V": LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")
+; Ctrl+Alt+V: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")
 HotKey, ^!v, VST-HideShow
 ; Ctrl+Alt+w: Clear the workspace, closing all windows (except VST if Plugin embedding option is set to "no embedding") and then opens de Song-Editor
 HotKey, ^!w, Clear-WorkSpace
@@ -368,12 +370,21 @@ Click-On-Pin-Fx-Channels:
 		MsgBox, 64,, No Pinned chanels. `r`nPlease, pin them with the context menu on the FX channels.
 	else
 	{
-		MouseGetPos, MouseX, MouseY
+		; Note: all channels should be visible
+		WinActivate, ahk_exe lmms.exe
 		WinGet, hWnd, ID, A
+		vAccPath := "4.1.1.2.1.1" ; --> this is FX-mixer window. Give the focus to the window, so FX are visible
+		Obj := Acc_Get("Object", vAccPath, 0, "ahk_id " hWnd)
+		Obj.accDoDefaultAction(0)
 		RealPinnedFxChannels := SubStr(PinnedFxChannels, 2, StrLen(PinnedFxChannels) - 2)
 		Loop, Parse, RealPinnedFxChannels, "|"
 		{
-			vAccPath := "4.1.1.2.1.1.1.2.1.1." . A_LoopField . ".6"
+			vAccPath := "4.1.1.2.1.1.1.2.1.1." . A_LoopField . ".1"
+			WinObjPos := Acc_Get("Location", vAccPath, 0, "ahk_id " hWnd)
+																					   
+											
+	   
+			vAccPath := "4.1.1.2.1.1.1.2.1.1." . A_LoopField . ".6" ;-> this is the path to the "Mute this FX channel" object
 			WinObjPos := Acc_Get("Location", vAccPath, 0, "ahk_id " hWnd)
 			StringSplit, PosXY, WinObjPos, %A_Space%
 			PosX := SubStr(PosXY1, 2) + 8
@@ -381,7 +392,6 @@ Click-On-Pin-Fx-Channels:
 			CoordMode, Mouse, Screen
 			Click, %PosX% %PosY%
 		}
-		MouseMove, MouseX, MouseY
 	}
 return
 
@@ -390,12 +400,11 @@ return
 Show-Context-Menu:
 	WinGet, hWnd, ID, A
 	oAcc := Acc_ObjectFromPoint(vChildID)
-
 	vName := vValue := ""
-	vName := oAcc.accName(vChildID)
-	vValue := oAcc.accValue(vChildID)
-	vDescription := oAcc.accDescription(vChildID)
-	vHelp := oAcc.accHelp(vChildID)
+	vName := oAcc.accName(0)
+	vValue := oAcc.accValue(0)
+	vDescription := oAcc.accDescription(0)
+	vHelp := oAcc.accHelp(0)
 	; if the user clicks on "Add effect" button either on smple/instrument FX tab or in FX-Mixer
 	if (vName == "Add effect")
 	{ 
@@ -417,25 +426,20 @@ Show-Context-Menu:
 		Menu, samplesFoldersMenu, Show
 		return
 	}
-	SetSystemCursor() ; this action take some time. Unfortunately, it doesn't work
 	; if users clicks on an FX channel, we have to search for description in an inside object because the FX channel doesn't have any name nor description
 	FxChannelToPinUnPin := 0
 	vAccPath := JEE_AccGetPath(oAcc, hWnd)
 	SvAccPath := StrSplit(vAccPath, ".")
 	FxChannel := SvAccPath[11]
-	vAccPath := "4.1.1.2.1.1.1.2.1.1." . FxChannel . ".6"  ;-> this is the path to the "Mute this FX channel" object
+	vAccPath := "4.1.1.2.1.1.1.2.1.1." . FxChannel  ;-> this is the path to the FX channel object																							  
 	oAcc := Acc_Get("Object", vAccPath, 0, "ahk_id " hWnd)
 	vDescription := oAcc.accDescription(0)
-	if (vDescription == "Mute this FX channel")
+	if (InStr (vDescription, "The FX channel receives input" > 0))
 	{ 
 		FxChannelToPinUnPin := FxChannel
 		MouseGetPos, MouseXPos, MouseYPos
-		RestoreCursors()
 		Menu, fxChannelMenu, Show
 	}
-	else
-		RestoreCursors()
-
 return
 
 
@@ -480,20 +484,21 @@ return
 
 ; menuHandler for folder icon inside AudioFileProcessor or in Sample Track
 MenuHandlerSamplesFolders:
-sampleFolder := samplesFoldersArray[A_ThisMenuItem]
-if (vDescription == "Open other sample")
-	Send {Click %MouseXPos% %MouseYPos%}
-else
-	; for sample track, a double-click is needed
-	Send {Click %MouseXPos% %MouseYPos% 2}
-Sleep 500
-SendInput %sampleFolder%
-Sleep 500
-Send {ENTER}
+	sampleFolder := samplesFoldersArray[A_ThisMenuItem]
+	if (vDescription == "Open other sample")
+		Send {Click %MouseXPos% %MouseYPos%}
+	else
+		; for sample track, a double-click is needed
+		Send {Click %MouseXPos% %MouseYPos% 2}
+	Sleep 500
+	SendInput %sampleFolder%
+	Sleep 500
+	Send {ENTER}
 return
 
 ; menuHandler for FX channel
 MenuHandlerFxMenu:
+	SetSystemCursor() ; this action might take some time
 	;if no channel selected, return
 	if FxChannelToPinUnPin == 0
 		return
@@ -502,6 +507,28 @@ MenuHandlerFxMenu:
 		; if the channel is not already pinned
 		if (InStr(PinnedFxChannels, FxChannelToPinUnPin) == 0)
 			PinnedFxChannels .= FxChannelToPinUnPin . "|"
+	}
+	if (A_ThisMenuItem == "Pin All Channels to the right")
+	{
+		; Pin the channel the cursor is, if the channel is not already pinned
+		if (InStr(PinnedFxChannels, FxChannelToPinUnPin) == 0)
+			PinnedFxChannels .= FxChannelToPinUnPin . "|"
+		; Pin all other other channels to the right
+		FxChannel := FxChannelToPinUnPin +  1
+		loop {
+			PathObj := "4.1.1.2.1.1.1.2.1.1." . FxChannel  ;-> this is the path to the FX channel object
+			oAcc := Acc_Get("Object", PathObj, 0, "ahk_id " hWnd)
+			if isObject(oAcc)
+			{
+				vDescription := oAcc.accDescription(0)
+				if (InStr (vDescription, "The FX channel receives input" > 0))
+					if (InStr(PinnedFxChannels, FxChannel) == 0)
+						PinnedFxChannels .= FxChannel . "|"
+				FxChannel += 1
+			} 
+			else
+				break
+		}
 	}
 	if (A_ThisMenuItem == "UnPin this channel")
 	{
@@ -516,6 +543,7 @@ MenuHandlerFxMenu:
 	}
 	if (A_ThisMenuItem == "UnPin all channels")
 		PinnedFxChannels := "|"
+	RestoreCursors()
 return
 
 
