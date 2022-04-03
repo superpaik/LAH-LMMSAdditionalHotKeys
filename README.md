@@ -16,7 +16,7 @@ When the interaction is with GUI objects, they have to be visible. Sometimes the
 If you have AutoHotKey in your system you can load the script directly. You will need:
 <ul>
 	<li>LMMSAdditionalHotKeys.ahk : main script</li>
-	<li>acc-for-lmms.ahk : main script</li>
+	<li>acc-for-lah.ahk : acc.ahk + acc-extended.ahk scripts + some minor changes to make it work with LMMS</li>
 	<li>config.xml : config file for context menu. Edit it to your liking before using it</li>
 </ul>
 If you don't have AutoHotKey, you will need:
