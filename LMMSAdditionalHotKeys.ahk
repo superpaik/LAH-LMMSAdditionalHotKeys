@@ -192,8 +192,8 @@ HotKey, ^!v, VST-HideShow
 HotKey, ^!w, Clear-WorkSpace
 ; Ctrl+Alt+p: Click on "Mute this FX channel" for all Pinned FX Channels (trough context menu)
 Hotkey, ^!p, Click-On-Pin-Fx-Channels
-; Ctrl+LeftMouseButton: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file). And to Pin FX channels (menu inside this code)
-Hotkey, ^LButton, Show-Context-Menu
+; Ctrl+Shift+LeftMouseButton: (context action) show context menu, for effects and for VesTIge instruments (menus are defined in config.xml file). And to Pin FX channels (menu inside this code)
+Hotkey, ^+LButton, Show-Context-Menu
 ; MiddleMouseButton: (context action) delete the FX the cursor is over. Turning off this effect temporarily
 ; Hotkey, MButton, Delete-FX
 
@@ -434,7 +434,7 @@ Show-Context-Menu:
 	vAccPath := "4.1.1.2.1.1.1.2.1.1." . FxChannel  ;-> this is the path to the FX channel object																							  
 	oAcc := Acc_Get("Object", vAccPath, 0, "ahk_id " hWnd)
 	vDescription := oAcc.accDescription(0)
-	if (InStr (vDescription, "The FX channel receives input" > 0))
+	if (InStr (vDescription, "The FX channel receives input"))
 	{ 
 		FxChannelToPinUnPin := FxChannel
 		MouseGetPos, MouseXPos, MouseYPos
@@ -449,7 +449,7 @@ Delete-FX:
 	oAcc := Acc_ObjectFromPoint(vChildID)
 	vHelp := oAcc.accHelp(vChildID)
 	;if the user middle-click on an Effect either on smple/instrument FX tab or in FX-Mixer
-	if (InStr (vHelp, "Effect plugins function" > 0))
+	if (InStr (vHelp, "Effect plugins function"))
 	{ 
 		Send {RButton}
 		Send R
