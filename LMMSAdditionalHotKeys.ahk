@@ -1,4 +1,4 @@
-; Additional HotKeys to LMMS using AutoHotKey (only for windows)
+; LMMS Additional HotKeys using AutoHotKey (only for windows)
 ;
 ; Inspired after checking the https://enhancementsuite.me/ project, that is something similar but for Ableton Live.
 ; It uses acc.ahk Standard Library by Sean Updated by jethrow
@@ -15,15 +15,15 @@
 
 #include acc-for-lah.ahk
 
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+
 VstVisibles := true
 VstVisiblePID := ""
 LoopPointsActive := false
 IsPlaying := false
-; this value is used in "Check for updates" against the file called version.txt on github
-Version := 0.8
-CheckForUpdateURL := 
-
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+; This value is used in "Check for updates" against the file called version.txt on master/github
+LocalVersion := "0.9"
+CheckForUpdateURL := "https://raw.githubusercontent.com/superpaik/LAH-LMMSAdditionalHotKeys/master/version.txt"
 
 MouseXPos := 0
 MouseYPos := 0
@@ -44,15 +44,16 @@ Menu, Tray, Tip, LAH (LMMS Additional HotKeys)
 ; HotKey "creation"
 ;-------------------------------------
 
-
 #IfWinActive ahk_exe lmms.exe
 
-; Ctrl+Space: Song-Editor Play/Pause 
+; Ctrl+Space: Song-Editor Play/Stop
 HotKey, ^Space, SongEditor-PlayStop
-; Alt+Space: Piano-Roll Play/Pause
+; Alt+Space: Piano-Roll Play/Stop
 HotKey, !Space, PianoRoll-PlayStop
 ; Ctrl+Alt+Space: Piano-Roll record while playing
 HotKey, ^!Space, PianoRoll-Record-While-Playing
+; Ctrl+Alt+p: Song-Editor Stop
+HotKey, ^!p, SongEditor-Stop
 ; Ctrl+l: Enable/Disable Loop-points
 HotKey, ^l, Loop-Points-EnableDisable
 ; Ctrl+Alt+V: LMMS: hide/show all visible VST (only works when Plugin embedding option is set to "no embedding")
@@ -74,7 +75,16 @@ About:
 return
 
 ChkUpdates:
-
+	whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	whr.Open("GET", CheckForUpdateURL, true)
+	whr.Send()
+	; Using 'true' above and the call below allows the script to remain responsive.
+	whr.WaitForResponse() ;this is taken from the installer. Can also be located as an example on the urldownloadtofile page of the quick reference guide.
+	RemoteVersion := whr.ResponseText
+	if (LocalVersion == RemoteVersion)
+		MsgBox, 64, Version information, You have the latest version. `nThanks for using LAH (LMMS Additional HotKeys).
+	else
+		MsgBox, 48, new Version available, Your current version is %LocalVersion%. The latest is %remoteVersion%. `nClick on "About..." in the script menu tray to go get the latest version.
 return
 
 
@@ -136,6 +146,17 @@ PianoRoll-Record-While-Playing:
 	oAcc := Acc_Get("Object", PathObj, 0, "ahk_id " hWnd)
 	oAcc.accDoDefaultAction(0)
 return
+
+; Ctrl+Alt+p: Song-Editor Stop
+SongEditor-Stop:
+	WinActivate, ahk_exe lmms.exe
+	WinGet, hWnd, ID, A
+	PathObj := "4.1.1.2.1.8.1.2.3" ; --> this is the Song-Editor Stop-Button Id
+	IsPlaying := false
+	oAcc := Acc_Get("Object", PathObj, 0, "ahk_id " hWnd)
+	oAcc.accDoDefaultAction(0)
+return
+
 
 ; Ctrl+l: Enable/Disable Loop-points
 Loop-Points-EnableDisable:
