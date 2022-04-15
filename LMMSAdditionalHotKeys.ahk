@@ -19,6 +19,9 @@ VstVisibles := true
 VstVisiblePID := ""
 LoopPointsActive := false
 IsPlaying := false
+; this value is used in "Check for updates" against the file called version.txt on github
+Version := 0.8
+CheckForUpdateURL := 
 
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
@@ -153,6 +156,8 @@ Loop-Points-EnableDisable:
 	oAcc := Acc_Get("Object", PathObj, 0, "ahk_id " hWnd)
 	oAcc.accDoDefaultAction(0)
 	WinObjPos := Acc_Get("Location", PathObj, 0, "ahk_id " hWnd)
+	if (WinObjPos == "x0 y0 w0 h0")
+		return
 	StringSplit, PosXY, WinObjPos, %A_Space%
 	PosX := SubStr(PosXY1, 2) + 10
 	PosY := SubStr(PosXY2, 2) + 10
