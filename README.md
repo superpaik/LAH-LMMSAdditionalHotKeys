@@ -34,27 +34,32 @@ If you don't have AutoHotKey, you will need:
   </tr>
   <tr>
     <td><b>Ctrl+Space</b></td>
-    <td>Song-Editor Play/Stop. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")</td>
+    <td>Song-Editor Play/Stop. It works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding").</td>
   </tr>
   <tr>
   <td><b>Alt+Space</b></td>
-    <td>Global Piano-Roll Play/Stop. It plays the notes on Piano-Roll (if there is any) Works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding")</td>
+    <td>Global Piano-Roll Play/Stop. It plays the notes on Piano-Roll (if there is any) Works from whatever window you are in LMMS or even in a VST window (when Plugin embedding option is set to "no embedding").</td>
   </tr>
   <tr>
     <td><b>Ctrl+Alt+Space</b></td>
-    <td>Piano-Roll Record while Playing</td>
+    <td>Piano-Roll Record while Playing.</td>
   </tr>
   <tr>
+    <td><b>Ctrl+Alt+p</b></td>
+    <td>Song-Editor Stop. Additional hotkey to stop playing, just in case ;-)</td>
+  </tr>
+
+  <tr>
     <td><b>Ctrl+l (el)</b></td>
-    <td>Enable/Disable Loop-points. The Song-Editor and the Enable/disable Loop-points button should be visible for it to work</td>
+    <td>Enable/Disable Loop-points. The Song-Editor and the Enable/disable Loop-points button should be visible for it to work.</td>
   </tr>
   <tr>
     <td><b>Ctrl+Alt+w</b></td>
-    <td>Clear the workspace, closing all windows in the LMMS workspace, and then opens de Song-Editor, as a default window. It doesn't close VSTs windows if embedding option is set to "no embedding". Use Ctrl+Alt+v to hide VSTs</td>
+    <td>Clear the workspace, closing all windows in the LMMS workspace, and then opens de Song-Editor, as a default window. It doesn't close VSTs windows if embedding option is set to "no embedding". Use Ctrl+Alt+v to hide VSTs.</td>
   </tr>
   <tr>
     <td><b>Ctrl+Alt+v</b></td>
-    <td>Hide/Show all visible VSTs (only works when Plugin embedding option is set to "no embedding")</td>
+    <td>Hide/Show all visible VSTs (only works when Plugin embedding option is set to "no embedding").</td>
   </tr>
 </table>
 
