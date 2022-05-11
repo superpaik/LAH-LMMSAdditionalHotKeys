@@ -3,7 +3,7 @@ Additional HotKeys for LMMS using AutoHotKey (only for windows) <br>
 
 The object of the project is to have additional hotkeys for LMMS.<br>
 Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br><br>
-Developed and tested on LMMS 1.2.2. Since it uses GUI elements Id it may not work on other LMMS versions.<br>
+Developed and tested on LMMS 1.2.2. Since it uses GUI elements Ids it may not work on other LMMS versions.<br>
 
 Inspired after checking the https://enhancementsuite.me/ project, that is something similar but for Ableton Live. <br>
 
@@ -21,7 +21,7 @@ If you have AutoHotKey in your system you can load the script directly. You will
 If you don't have AutoHotKey, you will need:
 <ul>
 	<li>LMMSAdditionalHotKeys.exe : main script</li>
-	<li>Yo can download it to any local folder. Upon executing the exe an icon try will be added from where you can exit the script, suspend the HotKeys or pause the script in case it alters the behaviour of other program's hotkeys.</li>
+	<li>You can download it to any local folder. Upon executing the exe an icon try will be added from where you can exit the script, suspend or pause the HotKeys in case it alters the behaviour of other program's hotkeys.</li>
 </ul>
 
 
