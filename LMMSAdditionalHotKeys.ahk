@@ -34,10 +34,16 @@ MouseYPos := 0
 Menu, Tray, Standard
 Menu, Tray, Add
 Menu, Tray, Add, My music, MyMusic
+Menu, Tray, Add
+Menu, Tray, Add, HotKeys List, HKeysList
 Menu, Tray, Add, Check for updates, ChkUpdates
 Menu, Tray, Add, About..., About 
 Menu, Tray, Click, 1
 Menu, Tray, Tip, LAH (LMMS Additional HotKeys)
+
+;------------------------------------------------------------------------------
+; HELP PAGE
+;------------------------------------------------------------------------------
 
 
 ;-------------------------------------
@@ -74,6 +80,29 @@ About:
 	Run, https://github.com/superpaik/LAH-LMMSAdditionalHotKeys
 return
 
+HKeysList:
+	Gui, New 
+	Gui, Font, s9, 
+	Gui, Add, Text,, 
+	Gui, Font, Bold
+	Gui, Add, Text,,List of available HotKeys:
+	Gui, Font,
+	Gui, Font, s9, 
+	Gui, Add, Text,, Ctrl+Space`t<--- Song-Editor Play/Stop
+	Gui, Add, Text,, Alt+Space`t<--- Piano-Roll Play/Stop
+	Gui, Add, Text,, Ctrl+Alt+Space`t<--- Piano-Roll Record while Playing
+	Gui, Add, Text,, Ctrl+Alt+p`t<--- Song-Editor Stop
+	Gui, Add, Text,, Ctrl+l (el)`t<--- Enable/Disable Loop-points
+	Gui, Add, Text,, Ctrl+Alt+w`t<--- Clear WorkSpace
+	Gui, Add, Text,, Ctrl+Alt+v`t<--- Hide/Show All Visible VSTs
+	Gui, Add, Text,, 
+	Gui, Add, Text,, Check "About..." for a detailed help.
+	Gui, Add, Text,,
+	Gui, Show, AutoSize, Available HotKeys
+return
+
+return
+
 ChkUpdates:
 	whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 	whr.Open("GET", CheckForUpdateURL, true)
@@ -84,7 +113,7 @@ ChkUpdates:
 	if (LocalVersion == RemoteVersion)
 		MsgBox, 64, Version information, You have the latest version. `nThanks for using LAH (LMMS Additional HotKeys).
 	else
-		MsgBox, 48, New version available, Your current version is "%LocalVersion%". The latest is "%remoteVersion%". `nClick on "About..." in the script menu tray to go get the latest version.
+		MsgBox, 48, New version available, Your current version is %LocalVersion%`nThe latest is %remoteVersion%`nClick on "About..." in the script menu tray to go get the latest version.
 return
 
 
