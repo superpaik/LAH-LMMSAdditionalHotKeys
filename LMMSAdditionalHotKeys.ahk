@@ -84,7 +84,7 @@ ChkUpdates:
 	if (LocalVersion == RemoteVersion)
 		MsgBox, 64, Version information, You have the latest version. `nThanks for using LAH (LMMS Additional HotKeys).
 	else
-		MsgBox, 48, new Version available, Your current version is %LocalVersion%. The latest is %remoteVersion%. `nClick on "About..." in the script menu tray to go get the latest version.
+		MsgBox, 48, New version available, Your current version is "%LocalVersion%". The latest is "%remoteVersion%". `nClick on "About..." in the script menu tray to go get the latest version.
 return
 
 
