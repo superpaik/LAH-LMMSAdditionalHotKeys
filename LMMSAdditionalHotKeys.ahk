@@ -22,7 +22,7 @@ VstVisiblePID := ""
 LoopPointsActive := false
 IsPlaying := false
 ; This value is used in "Check for updates" against the file called version.txt on master/github
-LocalVersion := "0.9"
+LocalVersion := "1.0"
 CheckForUpdateURL := "https://raw.githubusercontent.com/superpaik/LAH-LMMSAdditionalHotKeys/master/version.txt"
 
 MouseXPos := 0
@@ -111,7 +111,7 @@ ChkUpdates:
 	whr.WaitForResponse() ;this is taken from the installer. Can also be located as an example on the urldownloadtofile page of the quick reference guide.
 	RemoteVersion := whr.ResponseText
 	if (LocalVersion == RemoteVersion)
-		MsgBox, 64, Version information, You have the latest version. `nThanks for using LAH (LMMS Additional HotKeys).
+		MsgBox, 64, Version information, You have the latest version. `n`nThanks for using LAH (LMMS Additional HotKeys).
 	else
 		MsgBox, 48, New version available, Your current version is %LocalVersion%`nThe latest is %remoteVersion%`nClick on "About..." in the script menu tray to go get the latest version.
 return
