@@ -3,7 +3,7 @@ Additional HotKeys for LMMS using AutoHotKey (only for windows) <br>
 
 The object of the project is to have additional hotkeys for LMMS.<br>
 Actions are implemented using AutoHotKey: https://www.autohotkey.com/ <br><br>
-Developed and tested on LMMS 1.2.2. Since it uses GUI elements Ids it may not work on other LMMS versions.<br>
+Developed and tested on LMMS 1.2.2 and Windows 10 64bits. Since it uses GUI elements Ids it may not work on other LMMS versions.<br>
 
 Inspired after checking the https://enhancementsuite.me/ project, that is something similar but for Ableton Live. <br>
 
@@ -12,6 +12,7 @@ It uses acc.ahk Standard Library by Sean Updated by jethrow <br>
  	https://dl.dropbox.com/u/47573473/Web%20Server/AHK_L/Acc.ahk <br>
 It also uses additional acc functions (acc-extended.ahk) Sorry, I don't know the author <br>
 ------------------------------------------------------------------------------ <br>
+<b>How to use/install:</b>
 
 If you have AutoHotKey in your system you can load the script directly. You will need:
 <ul>
