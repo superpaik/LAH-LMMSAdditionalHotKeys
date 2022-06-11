@@ -22,7 +22,7 @@ If you have AutoHotKey in your system you can load the script directly. You will
 If you don't have AutoHotKey or want to go the short route, you will need:
 <ul>
 	<li>LMMSAdditionalHotKeys.exe : main script</li>
-	<li>You can download it to any local folder. Upon executing the exe an icon try will be added from where you can exit the script, suspend or pause the HotKeys in case it alters the behaviour of other program's hotkeys.</li>
+	<li>You can download it to any local folder. Upon executing the exe an icon try will be added and the hotkeys available. From there you can alse exit the script, suspend or pause it in case it alters the behaviour of other program's hotkeys.</li>
 </ul>
 
 
